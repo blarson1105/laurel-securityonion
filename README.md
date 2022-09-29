@@ -37,7 +37,7 @@ user-db = true
 sudo cp /home/defender/laureldir/etc/audit/plugins.d/laurel.conf /etc/audisp/plugins.d/
 ```
 ## Tell auditd(8) to re-evaluate its configuration:
-``````
+```
 sudo pkill -HUP auditd
 ```
 ## Restart auditd
