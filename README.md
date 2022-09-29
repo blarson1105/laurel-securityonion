@@ -75,15 +75,24 @@ output.logstash:
     hosts: ["192.168.5.100:5044"]
 # ================================= Processors =================================
 processors:
-   - decode_json_fields:
-      fields: ["message"]
-      process_array: true
-      max_depth: 10
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  #- add_cloud_metadata: ~
+  #- add_docker_metadata: ~
+  #- add_kubernetes_metadata: ~
+  - decode_json_fields:
+      fields: ["message","[message][SOCKADDR][SADDR]"]
       target: ""
-   - add_fields:
-      target: observer
+      process_array: true
+      max_depth: 11
+  - convert:
       fields:
-        name: laurel
+        - {from: "SYSCALL.syscall", to: "event.code", type: "string"}
+      ignore_missing: true
+      fail_on_error: false
+  - add_tags:
+      tags: [laurel]
+
 ```
 # Prior to starting Filebeat on the Linux server, run the so-allow command on the MANAGER NODE to allow beats endpoints to connect.
 
