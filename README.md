@@ -59,60 +59,33 @@ sudo dpkg -i filebeat-oss-8.3.3-amd64.deb
 ```
 sudo nano /etc/filebeat/filebeat.yml
 ```
-EXAMPLE INPUT
+CHANGES TO FILEBEAT.YML
 ```
 filebeat.inputs:
 
-# Each - is an input. Most options can be set at the input level, so
-# you can use different inputs for various configurations.
-# Below are the input specific configurations.
-
-# filestream is an input for collecting log messages from files.
-- type: filestream
-
-  # Unique ID among all inputs, an ID is required.
   id: laurel
 
-  # Change to true to enable this input configuration.
   enabled: true
 
-  # Paths that should be crawled and fetched. Glob based paths.
   paths:
     - /var/log/laurel/audit.log
-    #- c:\programdata\elasticsearch\logs\*
-
-# ---------------------------- Elasticsearch Output ----------------------------
-#output.elasticsearch:
-  # Array of hosts to connect to.
- # hosts: ["localhost:9200"]
-
-# ------------------------------ Logstash Output -------------------------------
+  
+  # ------------------------------ Logstash Output -------------------------------
 output.logstash:
   # The Logstash hosts
     hosts: ["192.168.5.100:5044"]
-
-
 # ================================= Processors =================================
 processors:
-  #- add_host_metadata:
-  #    when.not.contains.tags: forwarded
-  #- add_cloud_metadata: ~
-  #- add_docker_metadata: ~
-  #- add_kubernetes_metadata: ~
-  - decode_json_fields:
+   - decode_json_fields:
       fields: ["message"]
       process_array: true
-      max_depth: 1
+      max_depth: 10
       target: ""
-      overwrite_keys: true
-      add_error_key: true
-  - add_fields:
+   - add_fields:
       target: observer
       fields:
         name: laurel
 ```
-
-
 # Prior to starting Filebeat on the Linux server, run the so-allow command on the MANAGER NODE to allow beats endpoints to connect.
 
 ```
