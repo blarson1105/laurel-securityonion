@@ -13,26 +13,23 @@ sudo install -m755 laurel /usr/local/sbin/laurel
 ```
 sudo useradd --system --home-dir /var/log/laurel --create-home _laurel
 ```
-## Configure LAUREL: Customize /etc/laurel/config.toml.  (Changed splunk to defender)
+## Configure LAUREL: Customize /etc/laurel/config.toml.  Must change read-users and change translate values to "true".  If you do not change the translate values you will ingest hexidecimal representations of some of the values.  
 ```
 sudo mkdir /etc/laurel
 sudo cp /home/defender/laureldir/etc/laurel/config.toml /etc/laurel/
 sudo nano /etc/laurel/config.toml
 ```
 ##
-EXAMPLE CONFIG.TOML
+CHANGES TO CONFIG.TOML
 ```
-[auditlog]
-# Base file name for the JSONL-based log file. Set to "-" to log to stdout. In this case
-# other log file related settings will be ignored.
-file = "audit.log"
-# Rotate when log file reaches this size (in bytes)
-size = 5000000
-# When rotating, keep this number of generations around
-generations = 10
-# Grant read permissions on the log files to these users, using
-# POSIX ACLs
 read-users = [ "defender" ]
+
+[translate]
+# arch, syscall, sockaddr structures
+universal = true
+# UID, GID values
+user-db = true
+
 ```
 
 ## Register LAUREL as an auditd plugin:
