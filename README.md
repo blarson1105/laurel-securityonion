@@ -87,7 +87,6 @@ processors:
 ```
 # Prior to starting Filebeat on the Linux server, run the so-allow command on the MANAGER NODE to allow beats endpoints to connect.
 
-```
 ## Start filebeat
 ```
 sudo service filebeat start
@@ -108,7 +107,7 @@ sudo service filebeat status
 ![image](https://user-images.githubusercontent.com/73084279/193065242-0eaa3ad8-37a0-47cf-82d5-13893924af43.png)
 
 # Configure SecurityOnion
-Add Elastic pipeline for auditbeat
+Add Elastic pipeline for laurel
 
 ```
 cp  /opt/so/saltstack/default/salt/elasticsearch/files/ingest/beats.common  /opt/so/saltstack/local/salt/elasticsearch/files/ingest/beats.common
