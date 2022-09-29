@@ -183,10 +183,11 @@ cp /opt/so/saltstack/default/salt/soc/files/soc/dashboards.queries.json /opt/so/
 vi /opt/so/saltstack/local/salt/soc/files/soc/dashboards.queries.json
 ```
 ``` 
- { "name": "Laurel", "description": "Laurel logs", "query": "event.module:laurel | groupby event.module event.dataset | groupby event.dataset process.ex        ecutable process.command_line "},
+ { "name": "Laurel", "description": "Laurel logs", "query": "event.module:laurel | groupby event.module event.dataset | groupby -sankey  process.parent.executable process.executable SOCKADDR.SADDR.addr"},
 ``` 
 Restart SOC
 ```
 sudo so-soc-restart
 ```
+![image](https://user-images.githubusercontent.com/73084279/193070418-632a547a-2d76-4546-bad7-b58796da33b6.png)
 
